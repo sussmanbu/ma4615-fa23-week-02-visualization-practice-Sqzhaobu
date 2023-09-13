@@ -1,7 +1,7 @@
 ---
 title: "Week 02: COVID Visualization Activity"
 date: "September, 11 2023"
-author: "**`[[`**Your Name**`]]`**"
+author: "Siqi Zhao"
 ---
 
 Today, we'll be working with a data set related to COVID.
@@ -21,7 +21,8 @@ Try using the different data sets and see which ones are good for making which p
 
 
 ```{r first_plot}
-ggplot(covid_data_count, aes(x = date, y = Cases)) + geom_point()
+ggplot(covid_data_count, aes(x = date, y = Cases, color = state)) + 
+  geom_point() 
 ```
 
 
@@ -31,11 +32,45 @@ For now, see what you can do just using `ggplot`.
 
 ```{r}
 covid_data_count |> 
-  filter(state == "MA") |> 
-  ggplot(aes(x = date, y = Cases, color = race)) + geom_line()
+  filter(state == "MA", race != "Total") |> 
+  ggplot(aes(x = date, y = Cases, color = race)) + 
+  geom_smooth(method = "lm")+
+  geom_point()
 ```
 
 1. Write code for a plot and describe what you observe?
+In state MA, white people have a fatest growth race. 
 2. Are there any conclusions you can draw?
+In the state MA, white people are easier to get covid. 
 3. What were you not able to do due to not having the R knowledge?
+Because there are huge data, without R, I cannot draw the plot of all the data. 
 4. What other data would be useful to better understand this data?
+
+
+
+```{r}
+covid_data_long |> 
+  filter(state == "MA") |> 
+  ggplot(aes(x = date, y = count, color = race)) + 
+  geom_point()
+```
+
+
+So focus on the white people in MA, the deaths 
+```{r first_plot}
+ggplot(filter(covid_data_orig,State == "MA") ) + 
+  geom_point(aes(x = Date, y = Cases_White, color= "red")) +
+  geom_point(aes(x = Date, y = Deaths_White, color= "green")) +
+  geom_point(aes(x = Date, y = Hosp_White, color= "blue")) 
+```
+
+```{r first_plot}
+ggplot(covid_data_count, aes(x = state, fill = state)) + 
+  geom_bar() 
+```
+
+```{r}
+covid_data_count_race = covid_data_count %>% group_by(covid_data_count$race)
+ggplot(covid_data_count, aes(x = date, y = Cases), color = state)+
+         geom_point()
+```
