@@ -45,7 +45,7 @@ In the state MA, white people are easier to get covid.
 3. What were you not able to do due to not having the R knowledge?
 Because there are huge data, without R, I cannot draw the plot of all the data. 
 4. What other data would be useful to better understand this data?
-
+The number of Hosp and death.
 
 
 ```{r}
@@ -70,7 +70,6 @@ ggplot(covid_data_count, aes(x = state, fill = state)) +
 ```
 
 ```{r}
-covid_data_count_race = covid_data_count %>% group_by(covid_data_count$race)
-ggplot(covid_data_count, aes(x = date, y = Cases), color = state)+
+ggplot(covid_data_count, aes(x = date, y = Cases,color = state))+
          geom_point()
 ```
